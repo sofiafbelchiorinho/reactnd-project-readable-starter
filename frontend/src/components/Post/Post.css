@@ -1,0 +1,22 @@
+.Post{
+    border: 2px solid #249c9c;
+    border-radius: 4px;
+    padding: 12px;
+    margin: 5px 0;
+    text-align: left;
+    position: relative;
+}
+
+.Post-category{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #249c9c;
+    padding: 5px;
+    color: #fff;
+
+}
+
+.Post-score{
+
+}
