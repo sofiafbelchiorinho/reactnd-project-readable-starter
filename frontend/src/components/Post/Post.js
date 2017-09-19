@@ -9,12 +9,12 @@ class Post extends Component {
     const { post, category } = this.props;
 
     return (
-      <div className="Post">
-       <h3>Title: {post.title}</h3>
-       <div>Description: {post.body}</div>
-       <div className="Post-score">Score: {post.voteScore}</div>
-       <Link to="/category" className="Post-category">{category}</Link>
-      </div>
+      <li className="Post">
+        <h3>Title: {post.title}</h3>
+        <div>Description: {post.body}</div>
+        <div className="Post-score">Score: {post.voteScore}</div>
+        <Link to={`/category/${post.category.path}`} className="Post-category">{post.category.name}</Link>
+      </li>
     );
   }
 }
