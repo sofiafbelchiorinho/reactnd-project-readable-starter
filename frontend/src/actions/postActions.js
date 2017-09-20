@@ -1,13 +1,30 @@
 import { api, GET, POST, DELETE } from '../config'
 
+export const GET_POST = 'RECIEVE_POST'
 export const RECIEVE_POSTS = 'RECIEVE_POSTS'
-export const FETCH_POSTS = 'FETCH_POSTS'
 export const CREATE_POST = 'CREATE_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const VOTE_POST_UP = 'VOTE_POST_UP'
 export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
 export  const DELETE_POST = 'DELETE_POST'
 
+
+export function getPost(post){
+	return {
+		type: GET_POST,
+		post
+	}
+}
+
+export const fetchPost = (id) => dispatch => {
+  console.log('fetchPost', id);
+  return fetch(`${api}/posts/${id}`, GET)	
+    .then(res => { return(res.text())})
+    .then((post) => {
+      post = JSON.parse(post);
+      dispatch(getPost(post));
+    })
+};
 
 export function recievePosts(posts){
 	return {

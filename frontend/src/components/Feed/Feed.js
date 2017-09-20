@@ -12,9 +12,9 @@ class Feed extends Component {
   } 
 
   componentWillMount() {
-    //if(this.props.match && this.props.match.params){
-    // this.setState({category: this.props.match.params.categoryId})
-    //}
+    if(this.props.match && this.props.match.params){
+     this.setState({category: this.props.match.params.categoryId})
+    }
    if(this.props.posts.length == 0){
     this.props.fetchPosts()
     .then(response => {
@@ -24,15 +24,17 @@ class Feed extends Component {
   }  
 
   render() {
-    const { posts } = this.props;
+    const { posts }  = this.props;
     const { category } = this.state;
+    
+    let postsToShow = category ? posts.filter(c => c.category == category) : posts;
 
     return (
       <div className="Feed">
-        { category ? <h3>{category.name}</h3> : <h3>Your feed</h3>  }
+        { category ? <h3>{category}</h3> : <h3>Your feed</h3>  }
         <ul>              
           {
-            posts.map( post => {
+            postsToShow.map( post => {
               console.log(post);
               return <Post key={post.id} post={post}/>
             })
@@ -47,11 +49,11 @@ class Feed extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  console.log('mapStateToProps', state);
+function mapStateToProps ({posts, comments = []}) {
+
   return {
-    state,
-    posts: []
+    posts: posts.items,
+    comments
   }
 
    /*let cat = [{name: 'react', path: 'react'}, {name: 'redux', path: 'redux'} ];

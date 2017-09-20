@@ -10,10 +10,10 @@ class Post extends Component {
 
     return (
       <li className="Post">
-        <h3>Title: {post.title}</h3>
+        <Link to={`/post/${post.id}`} className="Post-title">{post.title}</Link>
         <div>Description: {post.body}</div>
         <div className="Post-score">Score: {post.voteScore}</div>
-        <Link to={`/category/${post.category.path}`} className="Post-category">{post.category.name}</Link>
+        <Link to={`/category/${post.category}`} className="Post-category">{post.category}</Link>
       </li>
     );
   }

@@ -1,15 +1,20 @@
 import {
-  FETCH_COMMENTS, ADD_COMMENT, EDIT_COMMENT, VOTE_COMMENT_UP, VOTE_COMMENT_DOWN, DELETE_COMMENT //comment actions
+  RECIEVE_COMMENTS, ADD_COMMENT, EDIT_COMMENT, VOTE_COMMENT_UP, VOTE_COMMENT_DOWN, DELETE_COMMENT //comment actions
 } from '../actions/commentActions'
 
 //COMMENTS
 
 const initialCommentsState = [];
   
-export default function comments (state = initialCommentsState, action) {
-   // const { post, comment, category, vote } = action
+export default function comments (state = { items: [] }, action) {
+   const { comments, comment } = action
   
   switch(action.type){
+    case RECIEVE_COMMENTS :
+      return {
+        ...state,
+        items: [...comments]     
+      }
     case ADD_COMMENT :
       return {
         ...state,

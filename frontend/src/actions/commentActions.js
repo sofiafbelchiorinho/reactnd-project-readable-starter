@@ -1,16 +1,28 @@
-export const FETCH_COMMENTS = 'FETCH_COMMENTS'
+import { api, GET, POST, DELETE } from '../config'
+
+export const RECIEVE_COMMENTS = 'RECIEVE_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const VOTE_COMMENT_UP = 'VOTE_COMMENT_UP'
 export const VOTE_COMMENT_DOWN = 'VOTE_COMMENT_DOWN'
 export  const DELETE_COMMENT = 'DELETE_COMMENT'
 
-export const recieveComments = posts => (
+export const recieveComments = comments => (
 	{
-		type: FETCH_COMMENTS,
-		posts
+		type: RECIEVE_COMMENTS,
+		comments
 	}
 );
+
+export const fetchComments = (id) => dispatch => {
+	console.log('fetchComments id', id)
+	return fetch(`${api}/posts/:${id}/comments`, GET)	
+    .then(res => { return(res.text())})
+    .then((comments) => {
+	  comments = JSON.parse(comments);
+      dispatch(recieveComments(comments));
+    })
+};
 
 export function addComment({comment, post}){
 	return {
