@@ -33,12 +33,12 @@ class PostDetail extends Component {
         <div>
           <h3>Title: {post.title}</h3>
           <div>Description: {post.body}</div>
-          <div>
+          <div className="PostDetail-comments">
               <h4>Comments:</h4>
               <ul>
               {
-                    comments.map((comment) => {
-                        <Comment author={comment.author} body={comment.body}/>
+                    comments.map((c) => {
+                        return <Comment comment={c}/>
                     })
                 }
               </ul>
@@ -54,7 +54,7 @@ class PostDetail extends Component {
 function mapStateToProps ({posts, comments}) {  
     return {
       post: posts.post,
-      comments
+      comments: comments.items
     } 
   }
   

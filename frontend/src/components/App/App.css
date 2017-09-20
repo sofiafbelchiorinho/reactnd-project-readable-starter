@@ -17,9 +17,10 @@
   font-size: large;
 }
 
-.App-content{
-  width: 70%;
-  margin: 70px auto;
+.App-main{
+  margin-left: 100px;
+  width: calc(100% - 140px);
+  padding: 20px;
 }
 
 .App-content ul{

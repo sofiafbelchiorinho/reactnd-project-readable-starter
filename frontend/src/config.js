@@ -1,5 +1,5 @@
 export const api = "http://localhost:3001";
-export const  headers = {'Authorization': 'whatever-you-want'}
+export const headers = {'Authorization': 'whatever-you-want',  "Content-Type": "application/json",}
 
 export const GET = {method: 'GET', headers: headers}
 export const POST = {method: 'POST', headers: headers}

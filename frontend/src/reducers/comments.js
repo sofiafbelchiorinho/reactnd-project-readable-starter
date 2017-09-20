@@ -3,8 +3,6 @@ import {
 } from '../actions/commentActions'
 
 //COMMENTS
-
-const initialCommentsState = [];
   
 export default function comments (state = { items: [] }, action) {
    const { comments, comment } = action

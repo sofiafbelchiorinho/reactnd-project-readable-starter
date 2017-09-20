@@ -12,31 +12,32 @@ class Feed extends Component {
   } 
 
   componentWillMount() {
+    /*
     if(this.props.match && this.props.match.params){
      this.setState({category: this.props.match.params.categoryId})
     }
-   if(this.props.posts.length == 0){
-    this.props.fetchPosts()
-    .then(response => {
-      console.log(response);
-    });
+    */ 
+    if(this.props.posts.length == 0){
+      this.props.fetchPosts()
+      .then(response => {
+        console.log(response);
+      });
    }
   }  
 
   render() {
-    const { posts }  = this.props;
-    const { category } = this.state;
+    const { posts, category }  = this.props;
     
-    let postsToShow = category ? posts.filter(c => c.category == category) : posts;
+    let postsToShow = category ? posts.filter(c => c.category == category.name) : posts;
 
     return (
       <div className="Feed">
-        { category ? <h3>{category}</h3> : <h3>Your feed</h3>  }
+        { category ? <h3>{category.name}</h3> : <h3>Your feed</h3>  }
         <ul>              
           {
-            postsToShow.map( post => {
+            postsToShow.map( (post, index) => {
               console.log(post);
-              return <Post key={post.id} post={post}/>
+              return <Post key={index} post={post}/>
             })
           }
         </ul> 
@@ -49,25 +50,12 @@ class Feed extends Component {
   }
 }
 
-function mapStateToProps ({posts, comments = []}) {
+function mapStateToProps ({posts, categories}) {
 
   return {
     posts: posts.items,
-    comments
+    category: categories.category
   }
-
-   /*let cat = [{name: 'react', path: 'react'}, {name: 'redux', path: 'redux'} ];
-  return {
-    posts: cat.map((category) => {
-      return Object.keys(posts[category.name]).reduce((accumulator, index) => {
-        accumulator = posts[category.name][index]
-          ? {...posts[category.name][index], category}
-          : null;
-        return accumulator;
-      }, [])
-    })   
-  }*/
-
 }
 
 function mapDispatchToProps (dispatch) {

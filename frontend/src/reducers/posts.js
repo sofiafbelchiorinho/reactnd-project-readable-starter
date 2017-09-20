@@ -5,7 +5,7 @@ import {
 
 export default function posts (state = { items: [] }, action) {
 
-  const { posts, post, category } = action
+  const { posts, items, post, category } = action
   console.log('posts', posts);
 
   switch (action.type) {
@@ -40,18 +40,24 @@ export default function posts (state = { items: [] }, action) {
     case VOTE_POST_UP :
       return {
         ...state,
-        [category] : {
-        ...state,
-        post          
-      }
+        items: state.items.map(item => {
+          if(item.id == post.id){
+            return post;
+          }else{
+            return item;
+          }
+        })      
     }
     case VOTE_POST_DOWN :
       return {
         ...state,
-        [post.category] : {
-        ...state,
-        post   
-      }
+        items: state.items.map(item => {
+          if(item.id == post.id){
+            return post;
+          }else{
+            return item;
+          }
+        })     
     }
     case DELETE_POST :
       return {
