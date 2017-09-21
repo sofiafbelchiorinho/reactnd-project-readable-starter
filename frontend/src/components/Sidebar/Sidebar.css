@@ -6,3 +6,20 @@
     width: 100px;
     background: #61dafb;
 }
+
+.Sidebar li{
+    padding: 10px 0;
+}
+
+.Sidebar li.active{
+    background: #fff;
+}
+
+.Sidebar li a{
+    color: #000;
+    text-decoration: none;
+}
+
+.Sidebar li.active a{
+    color: #61dafb;
+}

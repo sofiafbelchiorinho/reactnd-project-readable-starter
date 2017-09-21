@@ -16,16 +16,18 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { categories, setCurrentCategory } = this.props
+    const { categories, category, setCurrentCategory } = this.props
 
     return (
       <div className="Sidebar">
+        <h4>categories</h4>
         <ul>
           {
-            categories.map((category, index) => {
-              return <li key={index}><Link onClick={() => this.setCategory(category)} to={`/category/${category.path}`}>{category.name}</Link></li>;
+            categories.map((c, index) => {
+              return <li className={ category && category.name === c.name ? 'active' : ''} key={index}><Link onClick={() => this.setCategory(c)} to={`/category/${c.path}`}>{c.name}</Link></li>;
             })
           }
+          <li className={ category === null ? 'active' : ''} key="all"><Link onClick={() => this.setCategory(null)} to='/'>all</Link></li>
         </ul>
       </div>
     );
@@ -35,7 +37,8 @@ class Sidebar extends Component {
 
 function mapStateToProps ({categories}) {  
   return {
-    categories: categories.items
+    categories: categories.items,
+    category: categories.category
   }
 }
 

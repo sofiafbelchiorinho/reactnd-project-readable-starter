@@ -28,7 +28,7 @@ class Feed extends Component {
   render() {
     const { posts, category }  = this.props;
     
-    let postsToShow = category ? posts.filter(c => c.category == category.name) : posts;
+    let postsToShow = category ? posts.filter(c => c.category.name == category.name) : posts;
 
     return (
       <div className="Feed">
@@ -53,7 +53,12 @@ class Feed extends Component {
 function mapStateToProps ({posts, categories}) {
 
   return {
-    posts: posts.items,
+    posts: posts.items.map((post) => {
+      return {
+        ...post,
+        category: categories.items.find(c => c.name == post.category)
+      }
+    }),
     category: categories.category
   }
 }
