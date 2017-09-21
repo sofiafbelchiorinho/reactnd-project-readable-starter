@@ -1,11 +1,19 @@
 import {
-  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, VOTE_POST_UP, VOTE_POST_DOWN, DELETE_POST //post actions
+  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, VOTE_POST_UP, VOTE_POST_DOWN, DELETE_POST, SET_SORT_BY, RESET_SORT_BY //post actions
 } from '../actions/postActions'
 
+const initialState = { 
+  items: [],
+  post: null,
+  sortBy: {
+    property : 'voteScore',
+    order: 'desc'
+  } 
+}
 
-export default function posts (state = { items: [] }, action) {
+export default function posts (state = initialState, action) {
 
-  const { posts, items, post, category } = action
+  const { posts, items, post, category, sortBy } = action
   console.log('posts', posts);
 
   switch (action.type) {
@@ -14,7 +22,6 @@ export default function posts (state = { items: [] }, action) {
         ...state,
         post
       }
-
     case RECIEVE_POSTS :
       return {
         ...state,
@@ -23,20 +30,12 @@ export default function posts (state = { items: [] }, action) {
 
     case CREATE_POST :
       return {
-        ...state,
-        [category] : {
-        ...state,
-        post          
-      }
-    }
+        ...state       
+      }  
     case EDIT_POST :
       return {
-        ...state,
-        [category] : {
-        ...state,
-        post          
+        ...state        
       }
-    }
     case VOTE_POST_UP :
       return {
         ...state,
@@ -47,7 +46,7 @@ export default function posts (state = { items: [] }, action) {
             return item;
           }
         })      
-    }
+      }
     case VOTE_POST_DOWN :
       return {
         ...state,
@@ -57,17 +56,22 @@ export default function posts (state = { items: [] }, action) {
           }else{
             return item;
           }
-        })     
+      })     
     }
     case DELETE_POST :
       return {
-        ...state,   
-        [post.category] : {
-        ...state,
-        post: null  
+        ...state   
       }
-    }
-    
+    case SET_SORT_BY:
+      return {
+        ...state,
+        sortBy
+      }
+    case RESET_SORT_BY:
+      return {
+        ...state,
+        sortBy
+      }
     default:
         return state
   }

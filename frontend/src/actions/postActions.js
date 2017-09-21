@@ -7,6 +7,29 @@ export const EDIT_POST = 'EDIT_POST'
 export const VOTE_POST_UP = 'VOTE_POST_UP'
 export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
 export  const DELETE_POST = 'DELETE_POST'
+export  const SET_SORT_BY = 'SET_SORT_BY'
+export  const RESET_SORT_BY = 'RESET_SORT_BY'
+
+// sort
+export function resetSortingOrder(){
+	return {
+		type: SET_SORT_BY,
+		sortBy: {
+			property : 'voteScore',
+			order: 'desc'
+		}
+	}
+}
+
+export function setSortingOrder({property, order}){
+	return {
+		type: SET_SORT_BY,
+		sortBy: {
+			property,
+			order
+		}
+	}
+}
 
 //GET /posts/:id
 export function getPost(post){

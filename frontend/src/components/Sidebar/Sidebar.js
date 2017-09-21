@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { resetSortingOrder } from '../../actions/postActions';
 import { fetchCategories, setCurrentCategory } from '../../actions/categoryActions'
 import './Sidebar.css';
 
@@ -13,6 +14,9 @@ class Sidebar extends Component {
 
   setCategory = (category) => {
     this.props.setCurrentCategory(category)
+    if(!category){
+      this.props.resetSortingOrder();
+    }
   }
 
   render() {
@@ -44,6 +48,7 @@ function mapStateToProps ({categories}) {
 
 function mapDispatchToProps (dispatch) {
   return {
+    resetSortingOrder: () => dispatch(resetSortingOrder()),
     setCurrentCategory: (data) => dispatch(setCurrentCategory(data)),
     fetchCategories: (data) => dispatch(fetchCategories(data))
   }

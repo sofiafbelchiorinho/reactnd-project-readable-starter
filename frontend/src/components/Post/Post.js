@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { votePost } from '../../actions/postActions'
 import { setCurrentCategory } from '../../actions/categoryActions'
-
+import _ from 'lodash';
 import './Post.css';
 
 class Post extends Component {
@@ -35,28 +35,28 @@ class Post extends Component {
 }
 
 function mapStateToProps ({posts, categories}) {
+  
+  let postsWithCategory = posts.items.map((post) => {
+    return {
+      ...post,
+      category: categories.items.find(c => c.name == post.category)
+    }
+  });
 
-      //reducer --> return array of post in which category is an object
-  
-    return {
-      posts: posts.items.map((post) => {
-        return {
-          ...post,
-          category: categories.items.find(c => c.name == post.category)
-        }
-      })
-    }
+  return {
+    posts: _.orderBy(postsWithCategory, [posts.sortBy.property], [posts.sortBy.order])
   }
-  
-  function mapDispatchToProps (dispatch) {
-    return {
-      setCurrentCategory: (data) => dispatch(setCurrentCategory(data)),
-      votePost: (data, option) => dispatch(votePost(data, option))
-    }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    setCurrentCategory: (data) => dispatch(setCurrentCategory(data)),
+    votePost: (data, option) => dispatch(votePost(data, option))
   }
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Post)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Post)
   
