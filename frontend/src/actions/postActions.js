@@ -108,10 +108,10 @@ export const newPost = (post) => dispatch =>{
 		method: 'POST',
 		headers: headers,
 		body:  JSON.stringify({
-	      id: _.uniqueId('post_'),
+	      id: (new Date()).getTime().toString(),
 		  timestamp: (new Date()).getTime(),
 		  title: post.title,
-		  body: post.description,
+		  body: post.body,
 		  author: post.author,
 		  category: post.category.name,
 		})
@@ -119,10 +119,7 @@ export const newPost = (post) => dispatch =>{
 	return fetch(request)	
 	.then(res => res.json())
 	.then((response) => {
-		dispatch(createPost({
-		  ...response,
-		  category: post.category
-		})); 
+		dispatch(createPost(response)); 
 	})
 }
 

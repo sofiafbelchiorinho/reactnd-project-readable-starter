@@ -7,7 +7,7 @@ const initialState = {
   post: {
     title: '',
     author: '',
-    description: '',
+    body: '',
     category: {path: 'react', name: 'react'}
   },
   sortBy: {
@@ -65,7 +65,7 @@ export default function posts (state = initialState, action) {
     case CREATE_POST :
       return {
         ...state,
-        post,
+        post: initialState.post,
         items: [...state.items, post]
       }  
     case EDIT_POST :

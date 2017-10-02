@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import _ from 'lodash';
 import { newPost, fetchPosts, setSortingOrder, updateFormPost } from '../../actions/postActions'
+import { setCurrentCategory } from '../../actions/categoryActions'
 import PropTypes from 'prop-types'
 import Post from '../Post/Post'
 import './Feed.css';
@@ -15,10 +16,13 @@ class Feed extends Component {
         console.log(response);
       });
    }
+   if(!this.props.match.params.categoryId){
+    this.props.setCurrentCategory(null);
+   }
   }  
 
   addPost = () => {
-    if(!this.props.post.title || !this.props.post.category || !this.props.post.description || !this.props.post.author){
+    if(!this.props.post.title || !this.props.post.category || !this.props.post.body || !this.props.post.author){
       alert('fill in all inputs');
       return;
     }     
@@ -75,7 +79,7 @@ class Feed extends Component {
         </div>
         <div className="Feed-addPost">
           <label>Title:<input type="text" value={this.props.post.title} name="title" onChange={(event) => {this.handleInputChange(event)}}/></label>
-          <label>Description:<input type="text" value={this.props.post.description} name="description" onChange={(event) => {this.handleInputChange(event)}}/></label>
+          <label>Body:<input type="text" value={this.props.post.body} name="body" onChange={(event) => {this.handleInputChange(event)}}/></label>
           <label>Category: 
             <select name="category" value={this.props.post.category ? this.props.post.category : '' } onChange={(event) => {this.handleInputChange(event)}}>
               {
@@ -121,6 +125,8 @@ function mapDispatchToProps (dispatch) {
     fetchPosts: (data) => dispatch(fetchPosts(data)),
     newPost: (data) => dispatch(newPost(data)),
     updateFormPost: (data) => dispatch(updateFormPost(data)),
+    setCurrentCategory: (data) => dispatch(setCurrentCategory(data)),
+
   }
 }
 

@@ -38,7 +38,7 @@ class PostDetail extends Component {
               <ul>
               {
                     comments.map((c) => {
-                        return <Comment comment={c}/>
+                        return <Comment key={c.id} comment={c}/>
                     })
                 }
               </ul>

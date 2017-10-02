@@ -12,6 +12,10 @@ class Post extends Component {
     this.props.setCurrentCategory(category)
   }
 
+  setDate = (timestamp) => {
+    return (new Date(timestamp)).getDate() + '/' +((new Date(timestamp)).getMonth()+1) +  '/' + (new Date(timestamp)).getFullYear();
+  }
+
   render() {
     const { post, category } = this.props;
 
@@ -26,7 +30,7 @@ class Post extends Component {
           <Link to={`/post/${post.id}`} className="Post-title">{post.title}</Link>
           <div>{post.body}</div>
           <div>{post.author}</div>
-          <div>{post.timestamp}</div>
+          <div>{this.setDate(post.timestamp)}</div>
         </div>
         <Link className="Post-category" to={`/category/${post.category.path}`}  onClick={() => this.setCategory(post.category)}>
           {post.category.name}
@@ -36,17 +40,10 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps ({posts, categories}) {
+function mapStateToProps ({comments}) {
   
-  let postsWithCategory = posts.items.map((post) => {
-    return {
-      ...post,
-      category: categories.items.find(c => c.name === post.category)
-    }
-  });
-
-  return {
-    posts: _.orderBy(postsWithCategory, [posts.sortBy.property], [posts.sortBy.order])
+   return {
+    comments
   }
 }
 
