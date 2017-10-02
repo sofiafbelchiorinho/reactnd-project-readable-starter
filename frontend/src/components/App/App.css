@@ -18,9 +18,8 @@
 }
 
 .App-main{
-  margin-left: 100px;
+  margin-left: 150px;
   width: calc(100% - 140px);
-  padding: 20px;
 }
 
 .App-content ul{

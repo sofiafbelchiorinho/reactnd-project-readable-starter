@@ -1,4 +1,5 @@
 import { api, headers, GET, POST, DELETE } from '../config'
+import _ from 'lodash';
 
 export const GET_POST = 'RECIEVE_POST'
 export const RECIEVE_POSTS = 'RECIEVE_POSTS'
@@ -6,9 +7,10 @@ export const CREATE_POST = 'CREATE_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const VOTE_POST_UP = 'VOTE_POST_UP'
 export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
-export  const DELETE_POST = 'DELETE_POST'
-export  const SET_SORT_BY = 'SET_SORT_BY'
-export  const RESET_SORT_BY = 'RESET_SORT_BY'
+export const DELETE_POST = 'DELETE_POST'
+export const SET_SORT_BY = 'SET_SORT_BY'
+export const RESET_SORT_BY = 'RESET_SORT_BY'
+export const UPDATE_FORM_POST = 'UPDATE_FORM_POST'
 
 // sort
 export function resetSortingOrder(){
@@ -20,7 +22,6 @@ export function resetSortingOrder(){
 		}
 	}
 }
-
 export function setSortingOrder({property, order}){
 	return {
 		type: SET_SORT_BY,
@@ -79,6 +80,15 @@ export const votePost = (id, option) => dispatch => {
 			dispatch(votePostDown(post)); 
 	})
 };
+
+//create, update
+export function updateFormPost({name, value}){
+	return {
+		type: UPDATE_FORM_POST,
+		name,
+		value
+	}
+}
 export function votePostUp(post){
 	return {
 		type: VOTE_POST_UP,
@@ -92,23 +102,45 @@ export function votePostDown(post){
 	}
 }
 
-export function createPost({post, category}){
+// POST /posts/:id, post
+export const newPost = (post) => dispatch =>{
+	var request = new Request(`${api}/posts/`, {
+		method: 'POST',
+		headers: headers,
+		body:  JSON.stringify({
+	      id: _.uniqueId('post_'),
+		  timestamp: (new Date()).getTime(),
+		  title: post.title,
+		  body: post.description,
+		  author: post.author,
+		  category: post.category.name,
+		})
+	});
+	return fetch(request)	
+	.then(res => res.json())
+	.then((response) => {
+		dispatch(createPost({
+		  ...response,
+		  category: post.category
+		})); 
+	})
+}
+
+export function createPost(post){
 	return {
 		type: CREATE_POST,
-		post,
-		category
+		post
 	}
 }
 
-export function editPost({post, category}){
+export function editPost(post){
 	return {
 		type: EDIT_POST,
-		post,
-		category
+		post
 	}
 }
 
-export function deletePost({post}){
+export function deletePost(post){
 	return {
 		type: DELETE_POST,
     	post

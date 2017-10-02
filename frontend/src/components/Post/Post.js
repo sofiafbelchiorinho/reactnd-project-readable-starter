@@ -25,6 +25,8 @@ class Post extends Component {
         <div>
           <Link to={`/post/${post.id}`} className="Post-title">{post.title}</Link>
           <div>{post.body}</div>
+          <div>{post.author}</div>
+          <div>{post.timestamp}</div>
         </div>
         <Link className="Post-category" to={`/category/${post.category.path}`}  onClick={() => this.setCategory(post.category)}>
           {post.category.name}
@@ -39,7 +41,7 @@ function mapStateToProps ({posts, categories}) {
   let postsWithCategory = posts.items.map((post) => {
     return {
       ...post,
-      category: categories.items.find(c => c.name == post.category)
+      category: categories.items.find(c => c.name === post.category)
     }
   });
 

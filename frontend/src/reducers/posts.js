@@ -1,10 +1,15 @@
 import {
-  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, VOTE_POST_UP, VOTE_POST_DOWN, DELETE_POST, SET_SORT_BY, RESET_SORT_BY //post actions
-} from '../actions/postActions'
+  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, VOTE_POST_UP, VOTE_POST_DOWN, DELETE_POST, SET_SORT_BY, RESET_SORT_BY, UPDATE_FORM_POST //post actions
+} from '../actions/postActions';
 
 const initialState = { 
   items: [],
-  post: null,
+  post: {
+    title: '',
+    author: '',
+    description: '',
+    category: {path: 'react', name: 'react'}
+  },
   sortBy: {
     property : 'voteScore',
     order: 'desc'
@@ -13,51 +18,60 @@ const initialState = {
 
 export default function posts (state = initialState, action) {
 
-  const { posts, items, post, category, sortBy } = action
-  console.log('posts', posts);
+  const { posts, items, post, category, sortBy, value } = action
+  const property = action.name;
 
   switch (action.type) {
-    case GET_POST :
+    case GET_POST: //done
       return {
         ...state,
         post
       }
-    case RECIEVE_POSTS :
+    case RECIEVE_POSTS: //done
       return {
         ...state,
         items: [...posts]
       }
-
-    case CREATE_POST :
+    case UPDATE_FORM_POST: //done
       return {
-        ...state       
-      }  
-    case EDIT_POST :
-      return {
-        ...state        
-      }
-    case VOTE_POST_UP :
+        ...state,
+        post: {
+          ...state.post,
+          [property]: value
+        }      
+      }   
+    case VOTE_POST_UP: //done
       return {
         ...state,
         items: state.items.map(item => {
-          if(item.id == post.id){
+          if(item.id === post.id){
             return post;
           }else{
             return item;
           }
         })      
       }
-    case VOTE_POST_DOWN :
+    case VOTE_POST_DOWN: //done
       return {
         ...state,
         items: state.items.map(item => {
-          if(item.id == post.id){
+          if(item.id === post.id){
             return post;
           }else{
             return item;
           }
       })     
     }
+    case CREATE_POST :
+      return {
+        ...state,
+        post,
+        items: [...state.items, post]
+      }  
+    case EDIT_POST :
+      return {
+        ...state        
+      }
     case DELETE_POST :
       return {
         ...state   

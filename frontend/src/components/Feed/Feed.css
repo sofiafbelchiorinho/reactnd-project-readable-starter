@@ -1,3 +1,37 @@
+.Feed{
+    display: flex;
+}
+
+.Feed-list{
+    padding: 20px;
+    width: 70%;
+}
+
+.Feed-addPost{
+    width: 200px;
+    border-left: 2px solid #61dafb;
+    margin-left: 20px;
+    padding: 20px;
+    text-align: left;
+}
+
+.Feed-addPost label{
+    margin-bottom: 15px;
+    display: block;
+}
+
+.Feed-addPost input,
+.Feed-addPost select{
+    width: 100%;
+    margin-top: 5px;
+    line-height: 1.6em;
+    min-height: 20px;
+}
+
+.Feed-addPost select{
+    padding: 4px 0;
+}
+
 .Feed-sort a {
     background: #61dafb;
     margin: 0 5px;
@@ -12,6 +46,6 @@
     margin-right: 20px;
 }
 
-.Feed-sorting-area {
+.Feed-actions {
     display: flex;
 }
