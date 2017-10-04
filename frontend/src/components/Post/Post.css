@@ -30,3 +30,10 @@
     border-radius: 5px;
     background: #61dafb;
 }
+
+.Post-editBtn{
+    height: 21px;
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+}

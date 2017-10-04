@@ -1,44 +1,59 @@
 import {
-  RECIEVE_COMMENTS, ADD_COMMENT, EDIT_COMMENT, VOTE_COMMENT_UP, VOTE_COMMENT_DOWN, DELETE_COMMENT //comment actions
+  RECIEVE_COMMENTS, EDIT_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT //comment actions
 } from '../actions/commentActions'
 
 //COMMENTS
   
-export default function comments (state = { items: [] }, action) {
-   const { comments, comment } = action
+const initialState = {
+  items: [],
+  comment: {
+    body: '',
+    author: ''
+  },
+  editMode: false 
+}
+export default function comments (state = initialState, action) {
+   const { comments, comment, editMode } = action
   
   switch(action.type){
-    case RECIEVE_COMMENTS :
+    case RECIEVE_COMMENTS: //done
       return {
         ...state,
         items: [...comments]     
       }
-    case ADD_COMMENT :
+    case EDIT_COMMENT: //done
       return {
         ...state,
-        //TODO      
+        editMode,
+        comment: editMode ? comment : initialState.comment,   
       }
-    case EDIT_COMMENT :
+    case UPDATE_COMMENT: //done
       return {
         ...state,
-        //TODO      
-      }
-    case VOTE_COMMENT_UP :
+        comment,
+        items: state.items.map(item => {
+          if(item.id === comment.id){
+            return comment;
+          }else{
+            return item;
+          }
+      })     
+    }
+    case ADD_COMMENT: //done
       return {
         ...state,
-        //TODO      
-      }
-    case VOTE_COMMENT_DOWN :
+        comment: initialState.comment,
+        items: [...state.items, comment],
+        editMode: false
+      } 
+
+    case DELETE_COMMENT: //done
       return {
-        ...state,  
-        //TODO
-      }
-    case DELETE_COMMENT :
-      return {
-        ...state,
-        //TODO
-      }
-      default:
+        ...state,   
+        comment,
+        items: state.items.filter(item => item.id !== comment.id)
+      } 
+     default:
       return state
     }
   }   

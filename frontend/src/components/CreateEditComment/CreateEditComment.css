@@ -1,0 +1,27 @@
+.Feed-addComment{
+    width: 200px;
+    margin-left: 30px;
+    text-align: left;
+}
+
+.Feed-addComment label{
+    margin-bottom: 15px;
+    display: block;
+}
+
+.Feed-addComment input,
+.Feed-addComment select{
+    width: 100%;
+    margin-top: 5px;
+    line-height: 1.6em;
+    min-height: 20px;
+}
+
+.Feed-addComment select{
+    padding: 4px 0;
+}
+
+.Feed-addComment-btn{
+    margin-right: 5px;
+    float: right;
+}

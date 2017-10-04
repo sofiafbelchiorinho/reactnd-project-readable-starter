@@ -1,5 +1,5 @@
 import {
-  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, VOTE_POST_UP, VOTE_POST_DOWN, DELETE_POST, SET_SORT_BY, RESET_SORT_BY, UPDATE_FORM_POST //post actions
+  GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, UPDATE_POST, DELETE_POST, SET_SORT_BY, RESET_SORT_BY, UPDATE_FORM_POST //post actions
 } from '../actions/postActions';
 
 const initialState = { 
@@ -13,12 +13,13 @@ const initialState = {
   sortBy: {
     property : 'voteScore',
     order: 'desc'
-  } 
+  },
+  editMode: false 
 }
 
 export default function posts (state = initialState, action) {
 
-  const { posts, items, post, category, sortBy, value } = action
+  const { posts, items, post, category, sortBy, value, editMode } = action
   const property = action.name;
 
   switch (action.type) {
@@ -40,20 +41,10 @@ export default function posts (state = initialState, action) {
           [property]: value
         }      
       }   
-    case VOTE_POST_UP: //done
+    case UPDATE_POST: //done
       return {
         ...state,
-        items: state.items.map(item => {
-          if(item.id === post.id){
-            return post;
-          }else{
-            return item;
-          }
-        })      
-      }
-    case VOTE_POST_DOWN: //done
-      return {
-        ...state,
+        post,
         items: state.items.map(item => {
           if(item.id === post.id){
             return post;
@@ -62,20 +53,25 @@ export default function posts (state = initialState, action) {
           }
       })     
     }
-    case CREATE_POST :
+    case CREATE_POST: //done
       return {
         ...state,
         post: initialState.post,
-        items: [...state.items, post]
+        items: [...state.items, post],
+        editMode: false
       }  
-    case EDIT_POST :
+    case EDIT_POST: //done
       return {
-        ...state        
+        ...state,
+        editMode,
+        post: editMode ? post: initialState.post,   
       }
-    case DELETE_POST :
+    case DELETE_POST: //done
       return {
-        ...state   
-      }
+        ...state,   
+        post,
+        items: state.items.filter(item => item.id !== post.id)
+      }        
     case SET_SORT_BY:
       return {
         ...state,

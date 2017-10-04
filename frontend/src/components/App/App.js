@@ -7,6 +7,8 @@ import logo from '../../logo.svg';
 import Feed from '../Feed/Feed'
 import Sidebar from '../Sidebar/Sidebar'
 import PostDetail from '../PostDetail/PostDetail';
+import CreateEditPost from '../CreateEditPost/CreateEditPost';
+import CreateEditComment from '../CreateEditComment/CreateEditComment';
 import { api, GET } from '../../config'
 import './App.css';
 
@@ -27,6 +29,8 @@ class App extends Component {
               <Route exact path='/' component={Feed} />  
               <Route path='/category/:categoryId' component={Feed}/>    
               <Route path='/post/:postId' component={PostDetail} />  
+              <Route path='/createedit/:postId' component={CreateEditPost} />  
+              <Route path='/comment/:commentId' component={CreateEditComment} /> 
             </div>      
           </div>   
         </div>

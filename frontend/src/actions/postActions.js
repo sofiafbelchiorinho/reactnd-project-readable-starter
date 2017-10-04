@@ -5,12 +5,12 @@ export const GET_POST = 'RECIEVE_POST'
 export const RECIEVE_POSTS = 'RECIEVE_POSTS'
 export const CREATE_POST = 'CREATE_POST'
 export const EDIT_POST = 'EDIT_POST'
-export const VOTE_POST_UP = 'VOTE_POST_UP'
-export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
+export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const SET_SORT_BY = 'SET_SORT_BY'
 export const RESET_SORT_BY = 'RESET_SORT_BY'
 export const UPDATE_FORM_POST = 'UPDATE_FORM_POST'
+
 
 // sort
 export function resetSortingOrder(){
@@ -74,10 +74,7 @@ export const votePost = (id, option) => dispatch => {
 	return fetch(request)	
 	.then(res => res.json())
 	.then((post) => {
-		if(option === 'upVote') 
-			dispatch(votePostUp(post)); 
-		if(option === 'downVote') 
-			dispatch(votePostDown(post)); 
+		dispatch(update(post)); 
 	})
 };
 
@@ -89,27 +86,15 @@ export function updateFormPost({name, value}){
 		value
 	}
 }
-export function votePostUp(post){
-	return {
-		type: VOTE_POST_UP,
-		post
-	}
-}  
-export function votePostDown(post){
-	return {
-		type: VOTE_POST_DOWN,
-		post
-	}
-}
 
-// POST /posts/:id, post
+// POST /posts/, post
 export const newPost = (post) => dispatch =>{
 	var request = new Request(`${api}/posts/`, {
 		method: 'POST',
 		headers: headers,
 		body:  JSON.stringify({
-	      id: (new Date()).getTime().toString(),
-		  timestamp: (new Date()).getTime(),
+	      id: post.id || (new Date()).getTime().toString(),
+		  timestamp: post.timestamp || (new Date()).getTime(),
 		  title: post.title,
 		  body: post.body,
 		  author: post.author,
@@ -130,16 +115,54 @@ export function createPost(post){
 	}
 }
 
-export function editPost(post){
+//PUT /posts/:id, post
+export const updatePost = (post) => dispatch =>{
+	var request = new Request(`${api}/posts/${post.id}`, {
+		method: 'PUT',
+		headers: headers,
+		body: JSON.stringify({
+		  title: post.title,
+		  body: post.body,
+		}),
+	});
+	return fetch(request)	
+	.then(res => res.json())
+	.then((response) => {
+		dispatch(update(response)); 
+	})
+}
+
+
+export function update(post){
 	return {
-		type: EDIT_POST,
+		type: UPDATE_POST,
 		post
 	}
 }
 
-export function deletePost(post){
+export function toggleEditPost(post, editMode){
+	return {
+		type: EDIT_POST,
+		post,
+		editMode
+	}
+}
+
+export function remove(post){
 	return {
 		type: DELETE_POST,
     	post
 	}
 }
+
+export const removePost = (post) => dispatch => {
+	var request = new Request(`${api}/posts/${post.id}`, {
+		method: 'DELETE',
+		headers: headers
+	});
+	return fetch(request)	
+	.then(res => res.json())
+	.then((post) => {
+		dispatch(remove(post)); 
+	})
+};

@@ -1,6 +1,7 @@
 .PostDetail {
     text-align: left;
     padding: 30px;
+    margin-right: 30px;
 }
 
 .PostDetail-comments{
@@ -8,4 +9,15 @@
     border: 1px solid black;
     padding: 10px;
     margin-left: 20px;
+}
+
+.Post-header{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a.PostDetail-editBtn {
+    margin-left: 10px;
 }
