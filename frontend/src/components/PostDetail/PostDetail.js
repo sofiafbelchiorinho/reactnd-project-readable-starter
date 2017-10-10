@@ -5,7 +5,8 @@ import { toggleEditComment, fetchComments } from '../../actions/commentActions'
 import Comment from '../Comment/Comment'
 import './PostDetail.css';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 class PostDetail extends Component {
 
@@ -43,7 +44,7 @@ class PostDetail extends Component {
             <span className="PostDetail-editBtn">[ score: {post.voteScore} ]</span> 
             <Link className="PostDetail-editBtn" to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'upVote');}}>vote up</Link>           
             <Link className="PostDetail-editBtn" to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'downVote');}}>vote down</Link>
-            <Link className="PostDetail-editBtn" to={`/comment/new`} onClick={() => this.props.toggleEditComment(post, false)}>comment</Link>
+            <Link className="PostDetail-editBtn" to={`/comment/new`} onClick={() => this.props.toggleEditComment(post, false)}>add comment</Link>
             <Link className="PostDetail-editBtn" to={`/createedit/${post.id}`} onClick={() => this.props.toggleEditPost(post, true)}>edit</Link>         
           </div> 
           <div className="PostDetail-comments">
@@ -71,7 +72,7 @@ class PostDetail extends Component {
 function mapStateToProps ({posts, comments}) {  
     return {
       post: posts.post,
-      comments: comments.items
+      comments: _.orderBy(comments.items, [comments.sortBy.property], [comments.sortBy.order])
     } 
   }
   

@@ -10,7 +10,11 @@ const initialState = {
     body: '',
     author: ''
   },
-  editMode: false 
+  editMode: false,
+  sortBy: {
+    property : 'voteScore',
+    order: 'desc'
+  }, 
 }
 export default function comments (state = initialState, action) {
    const { comments, comment, editMode, value } = action;
