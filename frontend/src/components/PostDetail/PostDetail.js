@@ -33,14 +33,19 @@ class PostDetail extends Component {
         post && 
         <div>
           <div className="Post-header">
-            <h3>Title: {post.title}</h3>
-            <div className="Post-actions">
+            <h1>{post.title}</h1>
+            
+          </div>  
+          <div className="Post-body">Description: {post.body}</div>   
+          <div><span className="Post-author">by {post.author}</span></div>  
+          <div className="Post-actions">
               <Link className="PostDetail-editBtn" to={`/comment/new`} onClick={() => this.props.toggleEditComment(post, false)}>comment</Link>
               <Link className="PostDetail-editBtn" to={`/createedit/${post.id}`} onClick={() => this.props.toggleEditPost(post, true)}>edit</Link>
               <Link className="PostDetail-editBtn" to="/" onClick={() => this.props.removePost(post)}>delete</Link>
-            </div>
-          </div>  
-          <div className="Post-body">Description: {post.body}</div>        
+              <Link className="PostDetail-editBtn" to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'upVote');}}>vote up</Link>
+              <span className="PostDetail-editBtn">[ score: {post.voteScore} ]</span> 
+              <Link className="PostDetail-editBtn" to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'downVote');}}>vote down</Link> 
+            </div>   
           <div className="PostDetail-comments">
               <h4>Comments ({comments.length}):</h4>
               <ul>
@@ -50,11 +55,7 @@ class PostDetail extends Component {
                     })
                 }
               </ul>
-          </div>
-          <div>Author: {post.author}</div>
-          <a className="Post-vote" onClick={() => this.props.votePost(post.id, 'upVote')}>+</a>
-          <span>{post.voteScore}</span>
-          <a className="Post-vote" onClick={() => this.props.votePost(post.id,'downVote')}>-</a>     
+          </div>     
         </div>
       }
       </div>

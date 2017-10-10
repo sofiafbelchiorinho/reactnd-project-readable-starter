@@ -1,5 +1,5 @@
 import {
-  RECIEVE_COMMENTS, EDIT_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT //comment actions
+  RECIEVE_COMMENTS, UPDATE_FORM_COMMENT, EDIT_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT //comment actions
 } from '../actions/commentActions'
 
 //COMMENTS
@@ -13,7 +13,9 @@ const initialState = {
   editMode: false 
 }
 export default function comments (state = initialState, action) {
-   const { comments, comment, editMode } = action
+   const { comments, comment, editMode, value } = action;
+   const property = action.name;
+   
   
   switch(action.type){
     case RECIEVE_COMMENTS: //done
@@ -27,6 +29,14 @@ export default function comments (state = initialState, action) {
         editMode,
         comment: editMode ? comment : initialState.comment,   
       }
+    case UPDATE_FORM_COMMENT: //done
+      return {
+        ...state,
+        comment: {
+          ...state.comment,
+          [property]: value
+        }      
+      }   
     case UPDATE_COMMENT: //done
       return {
         ...state,

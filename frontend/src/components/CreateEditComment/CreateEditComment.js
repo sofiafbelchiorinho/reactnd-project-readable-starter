@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import _ from 'lodash';
-import { newComment, updateComment, toggleEditComment } from '../../actions/commentActions'
+import { newComment, updateComment, updateFormComment, toggleEditComment } from '../../actions/commentActions'
 import PropTypes from 'prop-types'
 import './CreateEditComment.css';
 import { Link } from 'react-router-dom';
@@ -12,8 +12,14 @@ class CreateEditComment extends Component {
     if(!this.props.comment.body || !this.props.comment.author){
       alert('fill in all inputs');
       return;
-    }     
-    this.props.newComment(this.props.comment);
+    }    
+    const {post, comment} = this.props; 
+    this.props.newComment({post, comment});
+  }
+
+  handleInputChange(event) {
+    const { name, value } = event.target;
+    this.props.updateFormComment({name, value});
   }
 
   render() {
@@ -22,8 +28,8 @@ class CreateEditComment extends Component {
     return (
     <div className="Feed-addComment">
       <h4>{ editMode ? 'Edit Comment' : 'Add new comment'}</h4>
-      <label>Body:<input type="text" value={comment.body} name="body"/></label>
-      <label>Author: <input type="text" value={comment.author} name="author" disabled={editMode}/></label>
+      <label>Body:<input type="text" value={comment.body} name="body" onChange={(event) => {this.handleInputChange(event)}}/></label>
+      <label>Author: <input type="text" value={comment.author} name="author" onChange={(event) => {this.handleInputChange(event)}} disabled={editMode}/></label>
       { !editMode && <Link to="/" className="Feed-addComment-btn" onClick={() => this.addComment()}>add</Link> }
       { editMode && 
       <div>
@@ -38,6 +44,7 @@ class CreateEditComment extends Component {
 
 function mapStateToProps ({posts, comments}) {
   return {
+    post: posts.post,
     comment: comments.comment,  
     editMode: comments.editMode
   }
@@ -47,6 +54,7 @@ function mapDispatchToProps (dispatch) {
   return {
     newComment: (data) => dispatch(newComment(data)),
     updateComment: (data) => dispatch(updateComment(data)),
+    updateFormComment: (data) => dispatch(updateFormComment(data)),
     toggleEditComment: (data, editMode) => dispatch(toggleEditComment(data, editMode))
   }
 }

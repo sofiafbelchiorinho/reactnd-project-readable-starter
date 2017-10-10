@@ -30,18 +30,17 @@ class Post extends Component {
     const { post, comments = null, category, editMode } = this.props;
 
     return (
-      <li className="Post">
-        <div className="Post-score">
-          <a className="Post-vote" onClick={() => this.props.votePost(post.id, 'upVote')}>+</a>
-          <span>{post.voteScore}</span>
-          <a className="Post-vote" onClick={() => this.props.votePost(post.id,'downVote')}>-</a>          
-        </div>
+      <li className="Post">       
         <div className="Post-left">
           <Link to={`/post/${post.id}`} className="Post-title">{post.title}</Link>
           <div>{post.body}</div>
-          <div>{post.author}</div>
-          <div>{this.setDate(post.timestamp)}</div>
+          <div>by <span className="Post-author">{post.author}</span> on {this.setDate(post.timestamp)}</div>
           <div>comments: {comments.length}</div>
+        </div>
+        <div className="Post-score">      
+          <Link to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'upVote');}}>vote up</Link>
+          <span>[ score: {post.voteScore} ]</span> 
+          <Link to='/' onClick={(e) => {e.preventDefault(); this.props.votePost(post.id, 'downVote');}}>vote down</Link>                 
         </div>
         <Link className="Post-category" to={`/category/${post.category.path}`}  onClick={() => this.setCategory(post.category)}>{post.category.name}</Link>
       </li>

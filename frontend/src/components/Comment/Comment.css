@@ -1,6 +1,22 @@
 .Comment{
-    border: 2px soli gold;
-    border-radius: 4px;
-    padding: 12px;
-    margin: 5px 0;
+    padding: 15px 0;
+    margin: 10px;
+    border-bottom: 1px dashed #5cd8fd;
+    position: relative;
+}
+
+.Comment-editBtn{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.Comment:first-child{
+    border-top: 1px dashed #5cd8fd;
+}
+
+.Comment-author {
+    color: #5cd8fd;
+    margin-top: 5px;
 }

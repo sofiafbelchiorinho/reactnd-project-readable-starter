@@ -7,6 +7,7 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const UPDATE_FORM_COMMENT = 'UPDATE_FORM_COMMENT'
 
 //GET /comments/:id
 export function getComment(comment){
@@ -41,7 +42,7 @@ export const fetchComments = (id) => dispatch => (
 );
 
 // POST /posts/, post
-export const newComment = (post, comment) => dispatch =>{
+export const newComment = ({post, comment}) => dispatch =>{
 	var request = new Request(`${api}/comments/`, {
 		method: 'POST',
 		headers: headers,
@@ -80,6 +81,15 @@ export const voteComment = (id, option) => dispatch => {
 		dispatch(update(post)); 
 	})
 };
+
+//create, update
+export function updateFormComment({name, value}){
+	return {
+		type: UPDATE_FORM_COMMENT,
+		name,
+		value
+	}
+}
 
 export const updateComment = (comment) => dispatch =>{
 	var request = new Request(`${api}/comments/${comment.id}`, {
