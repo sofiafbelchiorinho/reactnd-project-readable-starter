@@ -44,15 +44,26 @@ class CreateEditPost extends Component {
       </select>
       </label>
       <label>Author: <input type="text" value={post.author} name="author" disabled={editMode} onChange={(event) => {this.handleInputChange(event)}}/></label>
-      { !editMode && <Link to="/" className="Feed-addPost-btn" onClick={() => this.addPost()}>add</Link> }
+      { !editMode && 
+        <div> 
+          <Link to='/' className="Feed-addPost-btn" onClick={() => this.addPost()}>add</Link>
+          <Link to='/'  className="Feed-addPost-btn" onClick={() => this.props.toggleEditPost(post, false)}>cancel</Link> 
+        </div>  
+      }
       { editMode && 
-      <div>
-          <Link to="/" className="Feed-addPost-btn" onClick={() => this.props.updatePost(post)}>save</Link>
-          <Link to="/"  className="Feed-addPost-btn" onClick={() => this.props.toggleEditPost(post, false)}>cancel</Link> 
+      <div>          
+        <Link to={`/post/${post.id}`} className="Feed-addPost-btn" onClick={() => this.props.updatePost(post)}>save</Link>         
+        <Link to={`/post/${post.id}`}  className="Feed-addPost-btn" onClick={() => this.props.toggleEditPost(post, false)}>cancel</Link> 
       </div>
       }
     </div>  
     );
+  }
+
+  static propTypes = {
+    post: PropTypes.object,
+    categories: PropTypes.array,
+    editMode: PropTypes.bool
   }
 }
 

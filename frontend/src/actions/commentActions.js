@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 export const GET_COMMENT = 'GET_COMMENT'
 export const RECIEVE_COMMENTS = 'RECIEVE_COMMENTS'
+export const RECIEVE_POST_COMMENTS = 'RECIEVE_POST_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
@@ -33,11 +34,29 @@ export const recieveComments = comments => (
 	}
 );
 
+//GET /posts/:id/comments
+export const recievePostComments = (comments, postId) => (
+	{
+		type: RECIEVE_POST_COMMENTS,
+		comments,
+		postId
+	}
+);
+
+
 export const fetchComments = (id) => dispatch => (
 	fetch(`${api}/posts/${id}/comments`, GET)	
     .then(res => res.json())
     .then((comments) => {
       dispatch(recieveComments(comments));
+    })
+);
+
+export const fetchPostComments = (id) => dispatch => (
+	fetch(`${api}/posts/${id}/comments`, GET)	
+    .then(res => res.json())
+    .then((comments) => {
+      dispatch(recievePostComments(comments, id));
     })
 );
 
@@ -77,8 +96,8 @@ export const voteComment = (id, option) => dispatch => {
 	});
 	return fetch(request)	
 	.then(res => res.json())
-	.then((post) => {
-		dispatch(update(post)); 
+	.then((comment) => {
+		dispatch(update(comment)); 
 	})
 };
 
@@ -134,8 +153,8 @@ export const removeComment = (comment) => dispatch => {
 	});
 	return fetch(request)	
 	.then(res => res.json())
-	.then((post) => {
-		dispatch(remove(post)); 
+	.then((comment) => {
+		dispatch(remove(comment)); 
 	})
 };
 

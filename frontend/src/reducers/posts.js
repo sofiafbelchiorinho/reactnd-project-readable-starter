@@ -1,6 +1,7 @@
 import {
   GET_POST, RECIEVE_POSTS, CREATE_POST, EDIT_POST, UPDATE_POST, DELETE_POST, SET_SORT_BY, RESET_SORT_BY, UPDATE_FORM_POST //post actions
 } from '../actions/postActions';
+import { RECIEVE_POST_COMMENTS } from '../actions/commentActions';
 
 const initialState = { 
   items: [],
@@ -8,7 +9,8 @@ const initialState = {
     title: '',
     author: '',
     body: '',
-    category: {path: 'react', name: 'react'}
+    category: {path: 'react', name: 'react'},
+    comments: []
   },
   sortBy: {
     property : 'voteScore',
@@ -19,7 +21,7 @@ const initialState = {
 
 export default function posts (state = initialState, action) {
 
-  const { posts, items, post, category, sortBy, value, editMode } = action
+  const { posts, items, post, category, sortBy, value, editMode, postId, comments } = action
   const property = action.name;
 
   switch (action.type) {
@@ -28,6 +30,16 @@ export default function posts (state = initialState, action) {
         ...state,
         post
       }
+    case RECIEVE_POST_COMMENTS: //done
+      return {
+        ...state,
+        items: state.items.map(item => {
+          if(item.id === postId){
+            item.comments = comments;
+          }
+          return item;          
+      })
+    }
     case RECIEVE_POSTS: //done
       return {
         ...state,

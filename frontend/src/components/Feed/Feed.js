@@ -35,17 +35,17 @@ class Feed extends Component {
         <div className="Feed-list">
           <div className="Feed-actions">
             <div className="Feed-sort">
-              sort by score
+              sort by score:
               <a onClick={() => this.sortBy('voteScore', 'asc')}>asc</a>
               <a onClick={() => this.sortBy('voteScore', 'desc')}>desc</a>
             </div>  
             <div className="Feed-sort">
-              sort by timestamp
+              sort by timestamp:
               <a onClick={() => this.sortBy('timestamp', 'asc')}>asc</a>
               <a onClick={() => this.sortBy('timestamp', 'desc')}>desc</a>
             </div>  
             <div className="Feed-sort">
-              sort by title
+              sort by title:
               <a onClick={() => this.sortBy('title', 'asc')}>asc</a>
               <a onClick={() => this.sortBy('title', 'desc')}>desc</a>
             </div>  
@@ -64,7 +64,12 @@ class Feed extends Component {
   }
 
   static propTypes = {
-    posts: PropTypes.array.isRequired
+    post: PropTypes.object,
+    posts: PropTypes.array.isRequired,
+    editMode: PropTypes.bool,
+    category: PropTypes.object,
+    categories: PropTypes.array,
+    sortBy: PropTypes.object
   }
 }
 

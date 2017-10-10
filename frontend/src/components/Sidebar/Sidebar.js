@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { resetSortingOrder } from '../../actions/postActions';
 import { fetchCategories, setCurrentCategory } from '../../actions/categoryActions'
 import './Sidebar.css';
+import PropTypes from 'prop-types'
 
 class Sidebar extends Component {
 
@@ -35,6 +36,11 @@ class Sidebar extends Component {
         </ul>
       </div>
     );
+  }
+
+  static propTypes = {
+    category: PropTypes.object,
+    categories: PropTypes.array
   }
 }
 

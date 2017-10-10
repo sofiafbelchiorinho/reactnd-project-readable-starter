@@ -6,10 +6,7 @@
 }
 
 .Comment-editBtn{
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+   margin-left: 5px;
 }
 
 .Comment:first-child{
@@ -18,5 +15,18 @@
 
 .Comment-author {
     color: #5cd8fd;
-    margin-top: 5px;
+}
+
+.Comment-author, .Comment-score{
+    line-height: 1.6;
+    position: relative;
+}
+
+.Comment-actions {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }

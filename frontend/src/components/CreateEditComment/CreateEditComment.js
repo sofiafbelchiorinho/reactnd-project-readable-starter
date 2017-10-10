@@ -23,22 +23,24 @@ class CreateEditComment extends Component {
   }
 
   render() {
-    const { comment, comments, editMode }  = this.props;    
+    const { comment, comments, editMode, post }  = this.props;    
 
     return (
     <div className="Feed-addComment">
       <h4>{ editMode ? 'Edit Comment' : 'Add new comment'}</h4>
       <label>Body:<input type="text" value={comment.body} name="body" onChange={(event) => {this.handleInputChange(event)}}/></label>
       <label>Author: <input type="text" value={comment.author} name="author" onChange={(event) => {this.handleInputChange(event)}} disabled={editMode}/></label>
-      { !editMode && <Link to="/" className="Feed-addComment-btn" onClick={() => this.addComment()}>add</Link> }
-      { editMode && 
-      <div>
-          <Link to="/" className="Feed-addComment-btn" onClick={() => this.props.updateComment(comment)}>save</Link>
-          <Link to="/"  className="Feed-addComment-btn" onClick={() => this.props.toggleEditcomment(comment, false)}>cancel</Link> 
-      </div>
-      }
+      { !editMode && <Link to={`/post/${post.id}`} className="Feed-addComment-btn" onClick={() => this.addComment()}>add</Link> }
+      { editMode &&  <Link to={`/post/${post.id}`} className="Feed-addComment-btn" onClick={() => this.props.updateComment(comment)}>save</Link> }
+      <Link to={`/post/${post.id}`}  className="Feed-addComment-btn" onClick={() => this.props.toggleEditComment(comment, false)}>cancel</Link> 
     </div>  
     );
+  }
+
+  static propTypes = {
+    post: PropTypes.object,
+    comment: PropTypes.object,
+    editMode: PropTypes.bool
   }
 }
 
